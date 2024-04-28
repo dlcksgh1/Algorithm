@@ -33,3 +33,34 @@ class Solution {
         
     }
 }
+
+
+/**
+ * 에라토스 테네스 의 체
+public class prime {
+    public static void main(String[] args) {
+        int target = 100;
+
+        boolean[] isPrime = new boolean[101];
+        Arrays.fill(isPrime, true);
+        isPrime[0] = false;
+        isPrime[1] = false;
+
+        for (int i = 2; i <= Math.sqrt(target) ; i++) {
+            if (isPrime[i]) {
+
+                for (int j = i * i; j <= target; j += i) {
+                    isPrime[j] = false;
+                }
+            }
+        }
+
+        for (int i = 1; i <= target; i++) {
+            if (isPrime[i]) {
+                System.out.println(i);
+            }
+        }
+    }
+}
+
+ */
