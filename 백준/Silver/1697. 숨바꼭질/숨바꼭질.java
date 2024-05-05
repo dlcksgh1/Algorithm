@@ -17,14 +17,13 @@ public class Main {
         visited = new int[100001];
 
         bfs(su, bro);
-        System.out.println(visited[bro]-1);
+        System.out.println(visited[bro]);
 
     }
 
     private static void  bfs(int su, int bro) {
         Queue<Integer> queue = new LinkedList<>();
         queue.offer(su);
-        visited[su] = 1;
         while (!queue.isEmpty()) {
             int x = queue.poll();
             int[] dx = {x -1, x + 1, 2 * x};
