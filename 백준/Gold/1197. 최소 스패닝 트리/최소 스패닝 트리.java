@@ -1,9 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-/**
- * 다익스트라 알고리즘 사용하여 최단경로 구하기
- */
+
 public class Main {
 
 	static int total;
