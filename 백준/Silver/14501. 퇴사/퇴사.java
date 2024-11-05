@@ -1,38 +1,35 @@
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
+import java.io.IOException;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    static int[] days, costs, dp;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer st;
-        days = new int[n+1];
-        costs = new int[n+1];
-        dp = new int[n+1];
-        for (int i = 1; i <= n; i++) {
-            st = new StringTokenizer(br.readLine());
-            int day = Integer.parseInt(st.nextToken());
-            int cost = Integer.parseInt(st.nextToken());
-            days[i] = day;
-            costs[i] = cost;
-        }
-        Arrays.fill(dp, 0);
+        
+        // N 입력
+        int N = Integer.parseInt(br.readLine());
+        int[] T = new int[N + 1]; // 상담 기간
+        int[] P = new int[N + 1]; // 상담 보상
+        int[] dp = new int[N + 2]; // dp[i]: i일 이후 최대 수익
 
-        for (int i = 1; i <= n; i++) {
-            int day = days[i];
-            int cost = costs[i];
-            if(i + (day -1) > n) continue;
-            int start = i+day-1;
-            for (int j = start; j <= n ; j++) {
-                dp[j] = Math.max(dp[j], dp[i-1] + cost);
+        // T와 P 입력 받기
+        for (int i = 1; i <= N; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            T[i] = Integer.parseInt(st.nextToken());
+            P[i] = Integer.parseInt(st.nextToken());
+        }
+
+        // dp 계산
+        for (int i = N; i > 0; i--) {
+            if (i + T[i] <= N + 1) {
+                dp[i] = Math.max(P[i] + dp[i + T[i]], dp[i + 1]);
+            } else {
+                dp[i] = dp[i + 1]; // 일정이 끝날 날을 초과하면 선택할 수 없음
             }
         }
-        System.out.println(dp[n]);
 
+        // 결과 출력
+        System.out.println(dp[1]);
     }
 }
