@@ -15,12 +15,13 @@ public class Main {
             list.add(Integer.parseInt(st.nextToken()));
         }
         Collections.sort(list);
-        int sum = 0;
+        int result = 0, sum = 0;
+
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j <= i; j++) {
-                sum += list.get(j);
-            }
+            sum += list.get(i);
+            result += sum;
+
         }
-        System.out.println(sum);
+        System.out.println(result);
     }
 }
