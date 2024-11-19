@@ -5,81 +5,75 @@ import java.util.*;
 
 public class Main {
 
+    static int n;
+    static int[][] map;
+    static boolean[][] visited;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
 
-        int count = 0;
-        int[][] arr = new int[n][n];
-        boolean[][] visited = new boolean[n][n];
-        // 배열 초기화
+        n = Integer.parseInt(br.readLine());
+        map = new int[n][n];
+        visited = new boolean[n][n];
+
         for (int i = 0; i < n; i++) {
-            String str = br.readLine();
+            String line = br.readLine();
             for (int j = 0; j < n; j++) {
-                arr[i][j] = str.charAt(j) - '0';
+                map[i][j] = line.charAt(j) - '0';
             }
         }
 
-        ArrayList<Integer> list = new ArrayList<>();
-        // 전체에 대히여 bfs 돌리기
+        int cnt = 0;
+        ArrayList<Integer> result = new ArrayList<>();
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                if (!visited[i][j] && arr[i][j] == 1) {
-                    int cnt = bfs(arr, visited, i, j);
-                    list.add(cnt);
+
+                if(map[i][j] == 1 && !visited[i][j]) {
+                    cnt++;
+                    int count = bfs(i, j);
+                    result.add(count);
+                }
+            }
+        }
+        Collections.sort(result);
+        System.out.println(cnt);
+        for (int i = 0; i < result.size(); i++) {
+            System.out.println(result.get(i));
+        }
+
+    }
+    public static int bfs(int x, int y) {
+        int count = 0;
+        int[] dx = {0, 0, -1, 1};
+        int[] dy = {-1, 1, 0, 0};
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(new Node(x, y));
+        visited[x][y] = true;
+        count++;
+        while(!queue.isEmpty()) {
+            Node node = queue.poll();
+            for (int i = 0; i < 4; i++) {
+                int nx = node.x + dx[i];
+                int ny = node.y + dy[i];
+                if(nx < 0 || nx >=n || ny < 0 || ny >= n) continue;
+
+                if(map[nx][ny] == 1 && !visited[nx][ny]){
+                    visited[nx][ny] = true;
+                    queue.offer(new Node(nx, ny));
                     count++;
                 }
             }
         }
-        Collections.sort(list);
-        System.out.println(count);
-        for (int i = 0; i < count; i++) {
-            System.out.println(list.get(i));
+        return count;
+    }
+
+
+
+    private static class Node {
+        int x;
+        int y;
+        public Node(int x, int y) {
+            this.x = x;
+            this.y = y;
         }
-    }
-
-    private static int bfs(int[][] arr, boolean[][] visited,int i, int j) {
-        Queue<Node3> queue = new LinkedList<>();
-        queue.offer(new Node3(i, j));
-        visited[i][j] = true;
-        int cnt = 1;
-
-        int[] dx = {0, 0, -1, 1};
-        int[] dy = {1, -1, 0, 0};
-
-        while (!queue.isEmpty()) {
-            Node3 node = queue.poll();
-            int x = node.getX();
-            int y = node.getY();
-            for (int k = 0; k < 4; k++) {
-                int newX = x + dx[k];
-                int newY = y + dy[k];
-                if (0 <= newX && newX < arr.length && 0 <= newY && newY < arr[0].length && !visited[newX][newY] && arr[newX][newY] == 1) {
-                    queue.offer(new Node3(newX, newY));
-                    visited[newX][newY] = true;
-                    cnt++;
-                }
-            }
-        }
-        return cnt;
-
-    }
-}
-
-class Node3 {
-    private int x;
-    private int y;
-
-    public Node3(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 }
