@@ -11,18 +11,17 @@ public class Main {
         int cnt = 0;
         for (int i = 0; i < n; i++) {
             int k = Integer.parseInt(st.nextToken());
-            boolean is_prime = true;
-            if (k != 1) {
-                for (int j = 2; j <= Math.sqrt(k); j++) {
-                    if (k % j == 0) {
-                        is_prime = false;
-                        break;
-                    }
-                }
-                if(is_prime) cnt++;
-            }
+            if(isPrime(k)) cnt++;
         }
         System.out.println(cnt);
-        
+    }
+    static boolean isPrime(int n) {
+        if(n <= 1) return false;
+        for (int i = 2; i * i <= n ; i++) {
+            if(n % i == 0) {
+                return false;
+            }
+        }
+        return true;
     }
 }
