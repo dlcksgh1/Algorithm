@@ -3,19 +3,22 @@ import java.util.*;
 class Solution {
     public int solution(int n) {
         int answer = 0;
-        for(int i = 2; i<= n ; i ++){
-            if(isPrimeNumber(i)) answer++;
-        }
-        return answer;
-    }
+        boolean[] arr = new boolean[n+1];
+        Arrays.fill(arr, true);
 
-    public static boolean isPrimeNumber(int x) {
         
-        for(int i = 2; i <= Math.sqrt(x); i++) {
-            if(x % i == 0) {
-                return false;
+        for(int i = 2 ; i*i <= n; i ++){
+            if(arr[i]) {
+                for(int j =i*i ; j <= n ; j+= i) {
+                    arr[j] = false;
+                }   
             }
         }
-        return true;
+        
+        for(int i = 2 ; i <= n ; i++) {
+            if(arr[i]) answer ++;
+        }
+         
+        return answer;
     }
 }
